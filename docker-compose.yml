@@ -1,0 +1,28 @@
+version: '3.8'
+
+services: 
+  php-apache:
+    build:
+      context: './php7.2'
+    container_name: 'php7.2'
+    ports:
+      - '5010:80'
+    volumes:
+      - ./html:/var/www/html
+    links:
+      - mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+  mysql:
+    build: 
+      context: './mysql'
+    ports:
+      - '127.0.0.1:3306:3306'
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./log:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'test'
+      MYSQL_PASSWORD: 'test'
+      MYSQL_DATABASE: 'test'
